@@ -1,0 +1,18 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^images/items/(\d+)/([\w-_.]+) /image-cache/create?path=items/$1&file=$2 [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^images/brands/([\w-_.]+) /image-cache/create?path=brands&file=$1 [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^images/noimage_([\w-_.]+) /image-cache/create?path=&file=noimage_$1 [L,R=301]
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php
+

@@ -1,0 +1,334 @@
+html,
+body {
+    height: 100%;
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    /*padding: 0 0 60px;*/
+}
+
+.wrap > .container {
+    padding: 70px 15px 20px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: "\e151";
+}
+
+a.desc:after {
+    content: "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view td {
+    white-space: nowrap;
+}
+
+.grid-view .filters input,
+.grid-view .filters select {
+    min-width: 50px;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+    padding: 15px;
+    border: none;
+}
+
+@media(max-width: 767px) {
+    .nav li > form > button.logout {
+        display: block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 15px;
+    }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+    text-decoration: none;
+}
+
+.nav > li > form > button.logout:focus {
+    outline: none;
+}
+
+.module-title {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* gap between rows */
+.items-list div[class^='col'] {
+    margin-top: 40px;
+}
+
+/* item card */
+.item-card {
+    height: 340px;
+
+    /* img 236px + padding 4px (2 by each side) + border 2px (1 by each side) */
+    width: 240px;
+
+    /* animated border */
+    border: 1px solid #f0f0f0;
+    transition: border 0.3s linear;
+    border-radius: 3px;
+
+    /* align center within column */
+    float: none;
+    margin: 0 auto;
+}
+.item-card:hover {
+    /* animated border */
+    border: 1px solid #dbdbdb;
+}
+.item-card p {
+    width: 100%;
+    text-align: center;
+    padding: 0 10px;
+}
+.item-card s {
+    color: lightslategray;
+}
+.item-card a p {
+    font-weight: bold;
+}
+p.item-cart-name {
+    height: 55px;
+    margin-top: 5px;
+}
+.card_img_wrapper_switch {
+    display: block;
+    width: 238px;
+    height: 238px;
+}
+.card_img_wrapper_blink {
+    display: block;
+    width: 238px;
+    height: 238px;
+}
+.card_img_wrapper_switch > img, .card_img_wrapper_blink > img {
+    padding: 2px;
+}
+.item-card .card_img_wrapper_switch > img:last-child {
+    display: none;
+}
+.item-card:hover .card_img_wrapper_switch img:last-child {
+    display: block;
+}
+.item-card:hover .card_img_wrapper_switch img:first-child {
+    display: none;
+}
+
+/* generated element for shine effect.
+ * normal state is semi-transparent
+ * white but with zero width. Set no
+ * transition here for no mouse-leave
+ * animations. Otherwise the effect
+ * will play in reverse when your mouse
+ * leaves the element
+ */
+.item-card .card_img_wrapper_blink:after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.4);
+    -webkit-transition: none;
+    -moz-transition: none;
+    -ms-transition: none;
+    -o-transition: none;
+    transition: none;
+
+}
+/* on hover we animate the width to
+ * 100% and opacity to 0 so the element
+ * grows and fades out
+ */
+.item-card:hover .card_img_wrapper_blink:after {
+    width: 120%;
+    background-color: rgba(255,255,255,0);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.item-gift-logo .glyphicon {
+    position: absolute;
+    font-size: 1.3em;
+    border-radius: 50%;
+    color: white;
+    top: 23px;
+    left: 220px;
+}
+
+.item-gift-background .glyphicon {
+    position: absolute;
+    font-size: 3.5em;
+    color: #17a2b8;
+    top: 10px;
+    left: 205px;
+}
+
+.items-footer {
+    margin-top: 10px;
+}
+
+/* end item card */
+
+.shopping-cart {
+    min-width: 450px;
+    padding: 10px;
+}
+.shopping-cart table {
+    width: 100%;
+    border-spacing: 10px;
+    border-collapse: separate;
+}
+.shopping-cart p, .shopping-cart span {
+    white-space: nowrap;
+}
+p.empty_cart_notice {
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* footer */
+footer {
+    background-image: none;
+    background-color: #000;
+    color: #fff;
+    padding-bottom: 25px;
+}
+footer .logo img {
+    filter: invert(100%);
+}
+.footer_icons_grp img {
+    border: 1px solid #c9c9c9;
+    padding: 12px;
+    margin: 5px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+.city_silhouette {
+    height: 20vw;
+    background-image: url("/images/city_silhouette.png");
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    background-size: 100%;
+}
+footer a, footer li {
+    color: #ccc;
+}
+footer a:hover {
+    color: #fff;
+}
+/* end footer */
+
+
+/* search filter */
+.panel-title a.collapsed::after {
+    font-family: FontAwesome;
+    content: "\f107";
+    float: right;
+    color: grey;
+}
+.panel-title a::after
+{
+    font-family: FontAwesome;
+    content: "\f106";
+    float: right;
+    color: grey;
+}
+/* end search filter */
+
+.item-gift img {
+    padding-right: 10px;
+}
+
+.margin-top-xl { margin-top: 3em; }
+
+.related-items > tbody > tr > td {
+    vertical-align: middle
+}
+
+@media (min-width: 992px) {
+    .pull-right-md {
+        float: right;
+    }
+}
+
+.brand-card {
+    width: 300px;
+    height: 360px;
+    display: inline-block;
+    text-align: center;
+}
