@@ -3,7 +3,7 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of view `itemsValue`.
+ * Handles the creation of view `items_value`.
  */
 class m180726_015163_create_items_value_view extends Migration
 {
@@ -13,7 +13,7 @@ class m180726_015163_create_items_value_view extends Migration
     public function safeUp()
     {
         $sql = '
-            CREATE VIEW itemsValue AS
+            CREATE VIEW items_value AS
                 SELECT items.*, attributes.code, values_integer.value :: varchar(255)
                 FROM "items" 
                 LEFT JOIN "values_integer" ON "items".id = "values_integer".item_id 
@@ -48,6 +48,6 @@ class m180726_015163_create_items_value_view extends Migration
      */
     public function safeDown()
     {
-        $this->execute("DROP VIEW itemsValue");
+        $this->execute("DROP VIEW items_value");
     }
 }
