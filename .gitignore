@@ -1,5 +1,5 @@
 # yii console commands
-/yii
+# /yii
 /yii_test
 /yii_test.bat
 
@@ -53,3 +53,6 @@ phpunit.phar
 !*/web/assets/.gitkeep
 runtime/*
 !runtime/.gitkeep
+
+frontend/web/sitemap.xml
+frontend/web/sitemap-index.xml
