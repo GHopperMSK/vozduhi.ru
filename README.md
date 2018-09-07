@@ -1,3 +1,21 @@
+# install
+
+1. install and configure apache2 + php + postresql
+
+2. git clone
+
+3. composer install
+
+4. ./init
+
+5. edit common/config/main-local.php
+
+6. ./yii migrate
+
+7. ./yii admin/add
+
+===
+
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
