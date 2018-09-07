@@ -4,7 +4,6 @@ namespace common\models;
 
 use Yii;
 use yii\base\UserException;
-use yii\helpers\FileHelper;
 use common\models\BrandImage;
 use common\models\BrandSlug;
 use \yii\helpers\Url;

@@ -12,6 +12,9 @@ use common\models\Brand;
  */
 class BrandSearch extends Brand
 {
+    public $name;
+    public $logo;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +22,7 @@ class BrandSearch extends Brand
     {
         return [
             [['id'], 'integer'],
-            [['name', 'logo', 'description'], 'safe'],
+            [['name', 'logo'], 'safe'],
         ];
     }
 
@@ -63,8 +66,7 @@ class BrandSearch extends Brand
         ]);
 
         $query->andFilterWhere(['ilike', 'name', $this->name])
-            ->andFilterWhere(['ilike', 'logo', $this->logo])
-            ->andFilterWhere(['ilike', 'description', $this->description]);
+            ->andFilterWhere(['ilike', 'logo', $this->logo]);
 
         return $dataProvider;
     }
