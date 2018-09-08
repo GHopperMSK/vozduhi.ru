@@ -35,6 +35,13 @@ phpunit.phar
 /.vagrant
 
 /origin_images/*
+/origin_images/brands/*
+!/origin_images/brands
+!/origin_images/brands/.gitkeep
+/origin_images/items/*
+!/origin_images/items
+!/origin_images/items/.gitkeep
+
 !/origin_images/noimage.png
 /frontend/web/images/**
 !/frontend/web/images/city_silhouette.png
