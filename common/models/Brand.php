@@ -6,6 +6,7 @@ use Yii;
 use yii\base\UserException;
 use common\models\BrandImage;
 use common\models\BrandSlug;
+use yii\imagine\Image as Imagine;
 use \yii\helpers\Url;
 
 /**
@@ -159,7 +160,7 @@ class Brand extends \yii\db\ActiveRecord
                 return false;
             }
 
-            Image::resize($this->uploadedFile->tempName, BrandImage::LOGO_WIDTH, BrandImage::LOGO_HEIGHT)
+            Imagine::resize($this->uploadedFile->tempName, BrandImage::LOGO_WIDTH, BrandImage::LOGO_HEIGHT)
                 ->save($logoFullPath, ['quality' => 80]);
             $this->logo = $logoName;
 
