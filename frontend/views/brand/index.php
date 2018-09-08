@@ -7,7 +7,7 @@ use yii\helpers\Html;
  * @var $alphabet
  */
 
-$curLetter = $alphabet[0];
+$curLetter = array_shift($alphabet);
 ?>
 
 <?php if (count($alphabet)) : ?>
