@@ -19,6 +19,8 @@ use \yii\helpers\Url;
  */
 class Brand extends \yii\db\ActiveRecord
 {
+    private $_slug;
+
     /**
      * Obtained file
      *
@@ -105,21 +107,30 @@ class Brand extends \yii\db\ActiveRecord
      */
     public function getSlug()
     {
-        if ($this->id) {
-            $slug = BrandSlug::find()
-                ->where(['brand_id' => $this->id])
-                ->orderBy(['created_at' => SORT_DESC])
-                ->one();
+        if (!isset($this->_slug)) {
+            if ($this->id) {
+                $slug = BrandSlug::find()
+                    ->where(['brand_id' => $this->id])
+                    ->orderBy(['created_at' => SORT_DESC])
+                    ->one();
 
-            if (!$slug) {
+                if (!$slug) {
+                    $slug = new BrandSlug();
+                    $slug->brand_id = $this->id;
+                }
+            } else {
                 $slug = new BrandSlug();
-                $slug->brand_id = $this->id;
             }
-        } else {
-            $slug = new BrandSlug();
+
+            $this->_slug = $slug;
         }
 
-        return $slug;
+        return $this->_slug;
+    }
+
+    public function setSlug(BrandSlug $slug)
+    {
+        $this->_slug = $slug;
     }
 
     public function beforeDelete()

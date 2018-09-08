@@ -11,6 +11,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use common\models\BrandSlug;
+use yii\base\UserException;
 
 /**
  * BrandController implements the CRUD actions for Brand model.
@@ -79,6 +80,8 @@ class BrandController extends Controller
     {
         $model = new Brand();
 
+        $model->slug->load(Yii::$app->request->post());
+
         if ($model->load(Yii::$app->request->post())) {
 
             $model->uploadedFile = UploadedFile::getInstance($model, 'uploadedFile');
@@ -87,12 +90,12 @@ class BrandController extends Controller
             try {
                 if ($model->save()) {
                     // load ItemSlug model
-                    $brandSlug = $model->slug;
-                    if (!$brandSlug->load(Yii::$app->request->post()) || !$brandSlug->validate()) {
+                    $model->slug->brand_id = $model->id;
+                    if (!$model->slug->validate()) {
                         throw new UserException('Slug model error!');
                     }
 
-                    if (!$brandSlug->save(false)) {
+                    if (!$model->slug->save(false)) {
                         throw new UserException('Slug save error!');
                     }
 
@@ -124,6 +127,8 @@ class BrandController extends Controller
     {
         $model = $this->findModel($id);
 
+        $model->slug->load(Yii::$app->request->post());
+
         if ($model->load(Yii::$app->request->post())) {
 
             $model->uploadedFile = UploadedFile::getInstance($model, 'uploadedFile');
@@ -132,15 +137,14 @@ class BrandController extends Controller
             try {
                 if ($model->save()) {
                     // load ItemSlug model
-                    $brandSlug = $model->slug;
-                    if (!$brandSlug->load(Yii::$app->request->post()) || !$brandSlug->validate()) {
+                    if (!$model->slug->validate()) {
                         throw new UserException('Current slug error!');
                     }
 
-                    if ($brandSlug->isNew()) {
+                    if ($model->slug->isNew()) {
                         $newSlug = new BrandSlug();
-                        $newSlug->brand_id = $brandSlug->brand_id;
-                        $newSlug->slug = $brandSlug->slug;
+                        $newSlug->brand_id = $model->slug->brand_id;
+                        $newSlug->slug = $model->slug->slug;
                         if (!$newSlug->save()) {
                             throw new UserException('New slug error!');
                         }
