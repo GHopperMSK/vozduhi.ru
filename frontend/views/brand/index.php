@@ -6,12 +6,11 @@ use yii\helpers\Html;
  * @var $brandDataProvider
  * @var $alphabet
  */
-
-$curLetter = array_shift($alphabet);
 ?>
 
 <?php if (count($alphabet)) : ?>
 
+<?php $curLetter = $alphabet[0]; ?>
 <div>
 Алфавитный указатель:
 <?php foreach ($alphabet as $letter) : ?>
