@@ -15,7 +15,7 @@ class m180521_081040_create_brands_table extends Migration
         $this->createTable('brands', [
             'id' => $this->primaryKey(),
             'name' => $this->string(255)->notNull()->unique(),
-            'file' => $this->string(255),
+            'logo' => $this->string(255),
             'description' => $this->text(),
         ]);
     }
