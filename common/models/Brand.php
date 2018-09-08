@@ -6,6 +6,7 @@ use Yii;
 use yii\base\UserException;
 use common\models\BrandImage;
 use common\models\BrandSlug;
+use common\models\Image;
 use \yii\helpers\Url;
 
 /**
