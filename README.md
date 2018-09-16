@@ -1,6 +1,10 @@
 # install
 
 1. install and configure apache2 + php + postresql
+    php-intl
+    php-zip
+    php-curl
+    php-gd
 
 2. git clone
 

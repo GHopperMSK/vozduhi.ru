@@ -13,6 +13,9 @@ use common\models\Brand;
  */
 class Filter extends Model
 {
+    const DEFAULT_PRICE_MIN = 0;
+    const DEFAULT_PRICE_MAX = 1000000;
+
     /**
      * @var array
      */
@@ -93,12 +96,6 @@ class Filter extends Model
         ];
     }
 
-    public function init()
-    {
-        $this->priceMin = 0;
-        $this->priceMax = 1000000;
-    }
-
     /**
      * Get minimal and maximum item prices from given category
      * @param $categoryId integer
@@ -120,11 +117,11 @@ class Filter extends Model
             ->one();
 
         if (empty($priceResult['min'])) {
-            $priceResult['min'] = $this->priceMin;
+            $priceResult['min'] = self::DEFAULT_PRICE_MIN;
         }
 
         if (empty($priceResult['max'])) {
-            $priceResult['max'] = $this->priceMax;
+            $priceResult['max'] = self::DEFAULT_PRICE_MAX;
         }
 
         return [$priceResult['min'], $priceResult['max']];
@@ -151,11 +148,11 @@ class Filter extends Model
             ->one();
 
         if (empty($priceResult['min'])) {
-            $priceResult['min'] = $this->priceMin;
+            $priceResult['min'] = self::DEFAULT_PRICE_MIN;
         }
 
         if (empty($priceResult['max'])) {
-            $priceResult['max'] = $this->priceMax;
+            $priceResult['max'] = self::DEFAULT_PRICE_MAX;
         }
 
         return [$priceResult['min'], $priceResult['max']];
@@ -208,9 +205,6 @@ class Filter extends Model
         list($this->priceMin, $this->priceMax) = $this->getMinMaxPrice($category->id);
         if (strpos($this->price, ',')) {
             list($this->priceStart, $this->priceEnd) = explode(',', $this->price);
-        } else {
-            $this->priceStart = $this->priceMin;
-            $this->priceEnd = $this->priceMax;
         }
 
         $this->brandsFilter = $this->getBrandsFilter($category->id);
@@ -257,9 +251,6 @@ class Filter extends Model
         list($this->priceMin, $this->priceMax) = $this->getMinMaxPriceByBrand($brand->id);
         if (strpos($this->price, ',')) {
             list($this->priceStart, $this->priceEnd) = explode(',', $this->price);
-        } else {
-            $this->priceStart = $this->priceMin;
-            $this->priceEnd = $this->priceMax;
         }
 
         $this->brandsFilter = [];

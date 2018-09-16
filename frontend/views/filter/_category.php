@@ -3,8 +3,12 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use kartik\slider\Slider;
+use frontend\models\Filter;
 
 /* @var $this yii\web\View */
+
+$priceStart = isset($filter->priceStart) ? $filter->priceStart : Filter::DEFAULT_PRICE_MIN;
+$priceEnd = isset($filter->priceEnd) ? $filter->priceEnd : Filter::DEFAULT_PRICE_MAX;
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -28,7 +32,7 @@ use kartik\slider\Slider;
                     <?=
                     Slider::widget([
                         'name' => $filter->formName() . '[price]',
-                        'value' => "{$filter->priceStart},{$filter->priceEnd}",
+                        'value' => "{$priceStart},{$priceEnd}",
                         'sliderColor' => Slider::TYPE_GREY,
                         'pluginOptions' => [
                             'min' => $filter->priceMin,
