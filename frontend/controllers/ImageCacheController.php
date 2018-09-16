@@ -12,6 +12,7 @@ use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\imagine\Image as Imagine;
+use Imagine\Image\Box;
 use yii\helpers\FileHelper;
 
 /**
@@ -46,8 +47,26 @@ class ImageCacheController extends BaseController
                     FileHelper::createDirectory($pathInfo['dirname']);
                 }
 
-                Imagine::resize($originFile, $matches[2], $matches[3])
-                    ->save($file, ['quality' => 80]);
+                $image = Imagine::resize($originFile, $matches[2], $matches[3]);
+                $size = $image->getSize();
+
+                if ($size->getWidth() > 250 || $size->getHeight() > 200) {
+                    $wmImage = Imagine::getImagine()
+                        ->open(Yii::getAlias('@webroot/images/watermark.png'));
+                    $wmSize = $wmImage->getSize();
+
+                    if($size->getWidth() - $wmSize->getWidth() <= 0 || $size->getHeight() - $wmSize->getHeight() <= 0) {
+                        $wmImage = $wmImage->thumbnail(new Box($matches[2], $matches[3]));
+                        $wmSize = $wmImage->getSize();
+                    }
+
+                    $image = Imagine::watermark($image, $wmImage, [
+                        ($size->getWidth() / 2) - ($wmSize->getWidth() / 2),
+                        ($size->getHeight() / 2) - ($wmSize->getHeight() / 2)
+                    ]);
+                }
+
+                $image->save($file, ['quality' => 80]);
 
                 return $this->redirect(Yii::$app->params['imagesPath'] . "/{$path}/{$pathInfo['filename']}.{$ext}");
             } else {
