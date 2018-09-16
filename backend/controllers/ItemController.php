@@ -119,6 +119,8 @@ class ItemController extends Controller
     {
         $item = new Item();
 
+        $item->slug->load(Yii::$app->request->post());
+
         if ($item->load(Yii::$app->request->post()) && $item->validate()) {
 
             $item->uploadedFiles = UploadedFile::getInstances($item, 'uploadedFiles');
@@ -126,12 +128,12 @@ class ItemController extends Controller
             try {
                 if ($item->save(false)) {
                     // load ItemSlug model
-                    $itemSlug = $item->slug;
-                    if (!$itemSlug->load(Yii::$app->request->post()) || !$itemSlug->validate()) {
+                    $item->slug->item_id = $item->id;
+                    if (!$item->slug->validate()) {
                         throw new UserException('Slug model error!');
                     }
 
-                    if (!$itemSlug->save(false)) {
+                    if (!$item->slug->save(false)) {
                         throw new UserException('Slug save error!');
                     }
 
@@ -216,6 +218,8 @@ class ItemController extends Controller
     {
         $item = $this->findModel($id);
 
+        $item->slug->load(Yii::$app->request->post());
+
         if ($item->load(Yii::$app->request->post()) && $item->validate()) {
 
             $item->uploadedFiles = UploadedFile::getInstances($item, 'uploadedFiles');
@@ -223,15 +227,14 @@ class ItemController extends Controller
             try {
                 if ($item->save(false)) {
                     // load ItemSlug model
-                    $itemSlug = $item->slug;
-                    if (!$itemSlug->load(Yii::$app->request->post()) || !$itemSlug->validate()) {
+                    if (!$item->slug->validate()) {
                         throw new UserException('Current slug error!');
                     }
 
-                    if ($itemSlug->isNew()) {
+                    if ($item->slug->isNew()) {
                         $newSlug = new ItemSlug();
-                        $newSlug->item_id = $itemSlug->item_id;
-                        $newSlug->slug = $itemSlug->slug;
+                        $newSlug->item_id = $item->slug->brand_id;
+                        $newSlug->slug = $item->slug->slug;
                         if (!$newSlug->save()) {
                             throw new UserException('New slug error!');
                         }

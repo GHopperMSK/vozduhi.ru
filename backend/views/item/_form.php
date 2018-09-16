@@ -12,6 +12,8 @@ use ghopper\fileinput\FileInputWidget;
 /* @var $item common\models\Item */
 /* @var $form yii\widgets\ActiveForm */
 
+$this->registerJsFile("@web/js/transliterate.js");
+
 $imageInitData = [];
 
 // prepare initial data to be shown
@@ -66,7 +68,13 @@ if (is_array($images) && count($images)) {
 
     <?= $form->field($item, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($item->slug, 'slug')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($item->slug, 'slug', [
+        'template' => '{label}<div class="input-group">
+                {input}
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" onclick="setSlug()">Auto</button>
+                </span></div>',
+    ]) ?>
 
     <?= $form->field($item, 'description')->textarea(['rows' => 6]) ?>
 
@@ -318,6 +326,15 @@ $this->registerJs(<<<EOT
         $("div[id*='category_']").addClass('hide');
         // show the corresponding
         $('#category_' + categoryId).removeClass('hide');
+    }
+
+    function setSlug(e) {
+        let name = $('#item-name').val();
+        name = transliterate(name);
+        const slug = name.toLowerCase()
+            .replace(/[^\w ]+/g,'')
+            .replace(/ +/g,'-');
+        $('#itemslug-slug').val(slug);
     }
 
 EOT

@@ -8,6 +8,8 @@ use ghopper\fileinput\FileInputWidget;
 /* @var $model common\models\Brand */
 /* @var $form yii\widgets\ActiveForm */
 
+$this->registerJsFile("@web/js/transliterate.js");
+
 // TODO: set proper stats
 $initData = empty($model->logo) ? null : [[
     'name' => $model->logo,
@@ -51,9 +53,14 @@ $initData = empty($model->logo) ? null : [[
 
 <?php
 $this->registerJs(<<<EOT
-function setSlug(e) {
-    alert('not yet');
-}
+    function setSlug(e) {
+        let name = $('#brand-name').val();
+        name = transliterate(name);
+        const slug = name.toLowerCase()
+            .replace(/[^\w ]+/g,'')
+            .replace(/ +/g,'-');
+        $('#brandslug-slug').val(slug);
+    }
 EOT
     , \yii\web\View::POS_HEAD
 );
