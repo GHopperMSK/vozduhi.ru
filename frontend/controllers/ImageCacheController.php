@@ -56,7 +56,7 @@ class ImageCacheController extends BaseController
                     $wmSize = $wmImage->getSize();
 
                     if($size->getWidth() - $wmSize->getWidth() <= 0 || $size->getHeight() - $wmSize->getHeight() <= 0) {
-                        $wmImage = $wmImage->thumbnail(new Box($matches[2], $matches[3]));
+                        $wmImage = $wmImage->thumbnail(new Box($size->getWidth(), $size->getHeight()));
                         $wmSize = $wmImage->getSize();
                     }
 
