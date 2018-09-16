@@ -57,6 +57,7 @@ $this->params['breadcrumbs'] = $breadcrumbs;
                     'attribute' => $model,
                 ]);
             },
+            'emptyText' => false,
         ]); ?>
 
         <p><b>Цена:</b>

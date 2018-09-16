@@ -332,3 +332,12 @@ footer a:hover {
     display: inline-block;
     text-align: center;
 }
+
+.order_total > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.order_total > thead > tr > td {
+    text-align: center;
+    font-weight: bold;
+}

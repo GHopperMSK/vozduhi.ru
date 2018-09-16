@@ -6,10 +6,10 @@ use yii\widgets\ActiveForm;
 /* @var $order common\models\Order */
 ?>
 
-<?= $order->name ?>
+<p><?= $order->name ?></p>
 
-<?= $order->tel ?>
+<p><?= $order->tel ?></p>
 
-<?= $order->address ?>
+<p><?= $order->address ?></p>
 
 

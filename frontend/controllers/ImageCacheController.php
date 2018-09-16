@@ -50,7 +50,7 @@ class ImageCacheController extends BaseController
                 $image = Imagine::resize($originFile, $matches[2], $matches[3]);
                 $size = $image->getSize();
 
-                if ($size->getWidth() > 250 && $size->getHeight() > 200) {
+                if ($size->getWidth() > 300 && $size->getHeight() > 300) {
                     $wmImage = Imagine::getImagine()
                         ->open(Yii::getAlias('@webroot/images/watermark.png'));
                     $wmSize = $wmImage->getSize();

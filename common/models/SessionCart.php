@@ -47,7 +47,7 @@ class SessionCart extends Model
             $this->items[$item->id] = [
                 'image' => $image,
                 'name' => $item->name,
-                'price' => $item->price,
+                'price' => $item->discount->price ? $item->discount->price : $item->price,
                 'count' => 1,
             ];
         }

@@ -10,7 +10,13 @@ use yii\helpers\Html;
             <tr>
                 <td width="70px"><?= Html::img($item['image']) ?></td>
                 <td><?= $item['name'] ?></td>
-                <td width="70px"><span><?= $item['price'] ?> руб.</span></td>
+                <td width="70px">
+                    <?= Html::tag('span', Yii::$app->formatter->asCurrency(
+                        $item['price'],
+                        null,
+                        [\NumberFormatter::MAX_SIGNIFICANT_DIGITS => 100]
+                    ))?>
+                </td>
                 <td width="40px"><span><?= $item['count'] ?> шт.</span></td>
                 <td width="20px"><?= Html::a('<span class="glyphicon glyphicon-remove"></span>',
                         ['cart/remove', 'item_id' => $itemId]) ?></td>
@@ -18,7 +24,12 @@ use yii\helpers\Html;
         <?php endforeach; ?>
         <tr>
             <td colspan="2" align="right">Итого:</td>
-            <td colspan="3"><?= $cart->totalSum ?> руб.</td>
+            <td colspan="3"><?= Yii::$app->formatter->asCurrency(
+                    $cart->totalSum,
+                    null,
+                    [\NumberFormatter::MAX_SIGNIFICANT_DIGITS => 100]
+                ) ?>
+            </td>
         </tr>
     </table>
     <p>
