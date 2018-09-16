@@ -74,6 +74,8 @@ if (is_array($images) && count($images)) {
 
     <?= $form->field($item->discount, 'price')->textInput(['type' => 'number']) ?>
 
+    <?= $form->field($item, 'active')->checkbox() ?>
+
     <h2>Images</h2>
     <?= $form->field($item, 'uploadedFiles')->widget(FileInputWidget::className(), [
         'multi' => true,

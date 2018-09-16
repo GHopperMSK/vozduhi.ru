@@ -124,7 +124,7 @@ class ItemSearch extends Item
             $viewQuery->andFilterWhere(['in', 'brand_id', $filter->brands]);
         }
 
-        $query = Item::find()->where(['in', 'id', $viewQuery]);
+        $query = Item::find()->where(['in', 'id', $viewQuery])->andWhere(['=', 'active', true]);
 
         // add conditions that should always apply here
 
@@ -221,7 +221,7 @@ class ItemSearch extends Item
             $viewQuery->andFilterWhere(['<=', 'price', $filter->priceEnd]);
         }
 
-        $query = Item::find()->where(['in', 'id', $viewQuery]);
+        $query = Item::find()->where(['in', 'id', $viewQuery])->andWhere(['=', 'active', true]);
 
         // add conditions that should always apply here
 
@@ -255,7 +255,7 @@ class ItemSearch extends Item
      */
     public function lastItemsSearch()
     {
-        $query = Item::find()
+        $query = Item::find()->andWhere(['=', 'active', true])
             ->limit(12);
 
 
@@ -286,7 +286,7 @@ class ItemSearch extends Item
                 ['IN', 'id', Recommended::find()
                 ->select('recommended_item_id')
                 ->where(['item_id' => null])]
-            )->limit(12);
+            )->andWhere(['=', 'active', true])->limit(12);
 
 
         // add conditions that should always apply here

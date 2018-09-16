@@ -46,6 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'description:ntext',
             'price',
+            'active:boolean',
             [
                 'label' => 'Discount',
                 'value' => $model->discount ? $model->discount->price : null,

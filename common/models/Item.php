@@ -19,6 +19,7 @@ use common\models\Gift;
  * @property string $description
  * @property int $price
  * @property timestamp $modified_at
+ * @property bool $active
  *
  * @property Brand $brand
  * @property Categoryd $category
@@ -72,6 +73,7 @@ class Item extends \yii\db\ActiveRecord
         return [
             [['brand_id', 'category_id'], 'default', 'value' => null],
             [['brand_id', 'category_id', 'price'], 'integer'],
+            [['active'], 'boolean'],
             [['name', 'brand_id', 'category_id'], 'required'],
             [['description'], 'string'],
             [['uploadedFilesName'], 'each', 'rule' => ['string', 'max' => 255]],
@@ -109,6 +111,7 @@ class Item extends \yii\db\ActiveRecord
             'description' => 'Description',
             'price' => 'Price',
             'modified_at' => 'Modified at',
+            'active' => 'Is active',
         ];
     }
 
