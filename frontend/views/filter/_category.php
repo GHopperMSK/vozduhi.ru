@@ -9,6 +9,8 @@ use frontend\models\Filter;
 
 $priceStart = isset($filter->priceStart) ? $filter->priceStart : Filter::DEFAULT_PRICE_MIN;
 $priceEnd = isset($filter->priceEnd) ? $filter->priceEnd : Filter::DEFAULT_PRICE_MAX;
+
+$filterCount = $filter->count ? " (выбрано {$filter->count})" : '';
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -20,7 +22,7 @@ $priceEnd = isset($filter->priceEnd) ? $filter->priceEnd : Filter::DEFAULT_PRICE
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-title">
-                <a data-toggle="collapse" class="collapsed" href="#collapse1">Фильтр для поиска</a>
+                <a data-toggle="collapse" class="collapsed" href="#collapse1">Фильтр для поиска<?= $filterCount ?></a>
             </h4>
         </div>
         <div id="collapse1" class="panel-collapse collapse">

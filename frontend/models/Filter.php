@@ -75,7 +75,7 @@ class Filter extends Model
     /**
      * @var array
      */
-    public $attr;
+    public $attr = [];
 
     /**
      * {@inheritdoc}
@@ -256,5 +256,32 @@ class Filter extends Model
         $this->brandsFilter = [];
 
         $this->brandId = $brand->id;
+    }
+
+    /**
+     * The amount of checked filters
+     * @return int
+     */
+    public function getCount()
+    {
+        $i = 0;
+
+        if (($this->priceStart && $this->priceMin !== (int)$this->priceStart)
+            || ($this->priceEnd && $this->priceMax !== (int)$this->priceEnd))
+        {
+            $i++;
+        }
+
+        if (is_array($this->brands)) {
+            $i += count($this->brands);
+        }
+
+        foreach ($this->attr as $a) {
+            if (is_array($a)) {
+                $i += count($a);
+            }
+        }
+
+        return $i;
     }
 }
