@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use common\models\OrderItems;
+
 
 /**
  * This is the model class for table "{{%orders}}".
@@ -70,9 +72,9 @@ class Order extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCarts()
+    public function getCart()
     {
-        return $this->hasMany(Cart::className(), ['order_id' => 'id']);
+        return $this->hasMany(OrderItems::className(), ['order_id' => 'id']);
     }
 
     /**
