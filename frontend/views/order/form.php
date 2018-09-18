@@ -12,7 +12,9 @@ use \yii\helpers\Url;
 
 <?= $form->field($order, 'name')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($order, 'tel')->textInput(['maxlength' => true]) ?>
+<?= $form->field($order, 'tel')->widget(\yii\widgets\MaskedInput::className(), [
+    'mask' => '+7 (999) 999-99-99',
+]) ?>
 
 <?= $form->field($order, 'address')->textarea(['rows' => 6]) ?>
 

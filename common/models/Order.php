@@ -57,7 +57,7 @@ class Order extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Имя',
             'tel' => 'Телефон',
-            'address' => 'Адресс',
+            'address' => 'Адрес',
             'status_id' => 'Status ID',
         ];
     }
