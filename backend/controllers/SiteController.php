@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use \yii\helpers\Url;
 
 /**
  * Site controller
@@ -51,6 +52,14 @@ class SiteController extends Controller
                 'class' => 'yii\web\ErrorAction',
             ],
         ];
+    }
+
+    /**
+     * @return \yii\web\Response
+     */
+    public function goHome()
+    {
+        return $this->redirect(Url::to(['item/index', []]));
     }
 
     /**
