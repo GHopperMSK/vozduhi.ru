@@ -233,7 +233,7 @@ class ItemController extends Controller
 
                     if ($item->slug->isNew()) {
                         $newSlug = new ItemSlug();
-                        $newSlug->item_id = $item->slug->brand_id;
+                        $newSlug->item_id = $item->slug->item_id;
                         $newSlug->slug = $item->slug->slug;
                         if (!$newSlug->save()) {
                             throw new UserException('New slug error!');

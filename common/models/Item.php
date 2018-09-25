@@ -28,6 +28,8 @@ class Item extends \yii\db\ActiveRecord
 {
     const IMAGES_PATH = '/items';
 
+    private $_slug;
+
     /**
      * Files, obtained from the web form
      * @var UploadedFile[]
@@ -153,21 +155,25 @@ class Item extends \yii\db\ActiveRecord
      */
     public function getSlug()
     {
-        if ($this->id) {
-            $slug = ItemSlug::find()
-                ->where(['item_id' => $this->id])
-                ->orderBy(['created_at' => SORT_DESC])
-                ->one();
+        if (!isset($this->_slug)) {
+            if ($this->id) {
+                $slug = ItemSlug::find()
+                    ->where(['item_id' => $this->id])
+                    ->orderBy(['created_at' => SORT_DESC])
+                    ->one();
 
-            if (!$slug) {
+                if (!$slug) {
+                    $slug = new ItemSlug();
+                    $slug->item_id = $this->id;
+                }
+            } else {
                 $slug = new ItemSlug();
-                $slug->item_id = $this->id;
             }
-        } else {
-            $slug = new ItemSlug();
+
+            $this->_slug = $slug;
         }
 
-        return $slug;
+        return $this->_slug;
     }
 
     /**
