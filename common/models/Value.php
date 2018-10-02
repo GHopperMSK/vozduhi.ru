@@ -24,7 +24,7 @@ abstract class Value extends \yii\db\ActiveRecord
      * Returns all existed values
      * @return array
      */
-    static public function getFilterValues()
+    static public function getFilterValues($attributeId)
     {
         /**
          * If don't specify `$tableName`, `self::tableName()` will resolve the name
@@ -43,7 +43,9 @@ abstract class Value extends \yii\db\ActiveRecord
                     WHERE value = vtbl.value
                     LIMIT 1
                 ) AS id
-            FROM " . new \yii\db\Expression( "{$tableName} vtbl"))
+            FROM " . new \yii\db\Expression( "{$tableName} vtbl ")
+            . "WHERE attribute_id = :attributeId")
+            ->bindValue(':attributeId', $attributeId)
             ->queryAll();
     }
 

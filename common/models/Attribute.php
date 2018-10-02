@@ -103,7 +103,7 @@ class Attribute extends \yii\db\ActiveRecord
         $dataTypeName = $this->dataType->name;
         $valueClass = 'common\models\Value' . ucfirst($dataTypeName);
 
-        return $valueClass::getFilterValues();
+        return $valueClass::getFilterValues($this->id);
     }
 
     /**
