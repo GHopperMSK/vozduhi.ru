@@ -110,12 +110,12 @@ class ItemSearch extends Item
         }
 
         // add priceStart filter
-        if (isset($filter->priceStart)) {
+        if (isset($filter->priceStart) && ((int)$filter->priceStart !== $filter->priceMin)) {
             $viewQuery->andFilterWhere(['>=', 'price', $filter->priceStart]);
         }
 
         // add priceEnd filter
-        if (isset($filter->priceEnd)) {
+        if (isset($filter->priceEnd) && ((int)$filter->priceEnd !== $filter->priceMax)) {
             $viewQuery->andFilterWhere(['<=', 'price', $filter->priceEnd]);
         }
 
