@@ -259,7 +259,7 @@ class CategoryController extends Controller
                 $dbConnection = Yii::$app->db;
                 foreach (array_intersect($newCategoryAttributesIds, $oldCategoryAttributesIds) as $key => $attrId) {
                     $dbConnection->createCommand("
-                        UPDATE {{%categories_attributes}}
+                        UPDATE {{%category_attributes}}
                         SET {{pos}} = :pos
                         WHERE {{category_id}} = :category_id
                         AND {{attribute_id}} = :attribute_id
