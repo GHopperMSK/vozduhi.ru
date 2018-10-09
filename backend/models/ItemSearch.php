@@ -22,7 +22,7 @@ class ItemSearch extends Item
     {
         return [
             [['id', 'brand_id', 'category_id'], 'integer'],
-            [['name', 'description', 'brandName', 'categoryTitle'], 'safe'],
+            [['name', 'active', 'brandName', 'categoryTitle'], 'safe'],
         ];
     }
 
@@ -80,13 +80,18 @@ class ItemSearch extends Item
                     'desc' => ['{{%items}}.name' => SORT_DESC],
                     'default' => SORT_ASC
                 ],
+                'active' => [
+                    'asc' => ['{{%items}}.active' => SORT_ASC],
+                    'desc' => ['{{%items}}.active' => SORT_DESC],
+                    'default' => SORT_ASC
+                ],
             ],
         ]);
 
         $query->andFilterWhere(['ilike', '{{%items}}.name', $this->name])
+            ->andFilterWhere(['=', '{{%items}}.active', $this->active])
             ->andFilterWhere(['ilike', '{{%brands}}.name', $this->brandName])
-            ->andFilterWhere(['ilike', '{{%categories}}.name', $this->categoryTitle])
-            ->andFilterWhere(['ilike', '{{%items}}.description', $this->description]);
+            ->andFilterWhere(['ilike', '{{%categories}}.name', $this->categoryTitle]);
 
         return $dataProvider;
     }
