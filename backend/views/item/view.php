@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Category',
                 'value' => $model->category ? $model->category->title : null
             ],
+            'article',
             'name',
             [
                 'label' => 'Slug',

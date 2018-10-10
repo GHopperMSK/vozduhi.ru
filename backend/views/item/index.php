@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'categoryTitle',
                 'value' => 'category.title'
             ],
+            'article',
             'name',
             'active:boolean',
 

@@ -22,7 +22,7 @@ class ItemSearch extends Item
     {
         return [
             [['id', 'brand_id', 'category_id'], 'integer'],
-            [['name', 'active', 'brandName', 'categoryTitle'], 'safe'],
+            [['article', 'name', 'active', 'brandName', 'categoryTitle'], 'safe'],
         ];
     }
 
@@ -46,13 +46,17 @@ class ItemSearch extends Item
     {
         $query = Item::find()
             ->select('{{%items}}.*')
-            ->joinWith(['brand', 'category'])
-            ->orderBy(['modified_at' => SORT_DESC]);
+            ->joinWith(['brand', 'category']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'defaultOrder' => [
+                    'modified_at' => SORT_DESC,
+                ]
+            ],
         ]);
 
         $this->load($params);
@@ -63,32 +67,19 @@ class ItemSearch extends Item
             return $dataProvider;
         }
 
-        $dataProvider->setSort([
-            'attributes' => [
-                'brandName' => [
-                    'asc' => ['{{%brands}}.name' => SORT_ASC],
-                    'desc' => ['{{%brands}}.name' => SORT_DESC],
-                    'default' => SORT_ASC
-                ],
-                'categoryTitle' => [
-                    'asc' => ['{{%categories}}.name' => SORT_ASC],
-                    'desc' => ['{{%categories}}.name' => SORT_DESC],
-                    'default' => SORT_ASC
-                ],
-                'name' => [
-                    'asc' => ['{{%items}}.name' => SORT_ASC],
-                    'desc' => ['{{%items}}.name' => SORT_DESC],
-                    'default' => SORT_ASC
-                ],
-                'active' => [
-                    'asc' => ['{{%items}}.active' => SORT_ASC],
-                    'desc' => ['{{%items}}.active' => SORT_DESC],
-                    'default' => SORT_ASC
-                ],
-            ],
-        ]);
+        $dataProvider->sort->attributes['brandName'] = [
+            'asc' => ['{{%brands}}.name' => SORT_ASC],
+            'desc' => ['{{%brands}}.name' => SORT_DESC],
+            'default' => SORT_ASC
+        ];
+        $dataProvider->sort->attributes['categoryTitle'] = [
+            'asc' => ['{{%categories}}.name' => SORT_ASC],
+            'desc' => ['{{%categories}}.name' => SORT_DESC],
+            'default' => SORT_ASC
+        ];
 
         $query->andFilterWhere(['ilike', '{{%items}}.name', $this->name])
+            ->andFilterWhere(['=', '{{%items}}.article', $this->article])
             ->andFilterWhere(['=', '{{%items}}.active', $this->active])
             ->andFilterWhere(['ilike', '{{%brands}}.name', $this->brandName])
             ->andFilterWhere(['ilike', '{{%categories}}.name', $this->categoryTitle]);

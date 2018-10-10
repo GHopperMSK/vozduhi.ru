@@ -15,6 +15,7 @@ use common\models\Gift;
  * @property int $id
  * @property int $brand_id
  * @property int $category_id
+ * @property string(64) $article
  * @property string $name
  * @property string $description
  * @property int $price
@@ -79,6 +80,7 @@ class Item extends \yii\db\ActiveRecord
             [['name', 'brand_id', 'category_id'], 'required'],
             [['description'], 'string'],
             [['uploadedFilesName'], 'each', 'rule' => ['string', 'max' => 255]],
+            [['article'], 'string', 'max' => 64],
             [['name'], 'string', 'max' => 255],
             [['brand_id'], 'exist', 'skipOnError' => true,
                 'targetClass' => Brand::className(),
@@ -109,6 +111,7 @@ class Item extends \yii\db\ActiveRecord
             'category_id' => 'Category',
             'brandName' => 'Brand',
             'categoryTitle' => 'Category',
+            'article' => 'Article',
             'name' => 'Name',
             'description' => 'Description',
             'price' => 'Price',

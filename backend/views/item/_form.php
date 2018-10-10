@@ -66,6 +66,8 @@ if (is_array($images) && count($images)) {
         );
     ?>
 
+    <?= $form->field($item, 'article')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($item, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($item->slug, 'slug', [
