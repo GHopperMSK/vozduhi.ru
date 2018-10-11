@@ -68,13 +68,16 @@ class BrandImage extends Model
     public function getUrl($options)
     {
         if (empty($this->name)) {
-            return false;
+            $pathinfo = pathinfo('noimage.png');
+            $path = '';
+        } else {
+            $pathinfo = pathinfo($this->name);
+            $path = self::IMAGES_PATH;
         }
 
-        $pathinfo = pathinfo($this->name);
         $nameWithParams = "{$pathinfo['filename']}_{$options['width']}x{$options['height']}.{$pathinfo['extension']}";
         return Yii::$app->params['domainFrontend'] . Yii::$app->params['imagesPath']
-            . self::IMAGES_PATH . '/' . $nameWithParams;
+            . $path . '/' . $nameWithParams;
     }
 
     /**

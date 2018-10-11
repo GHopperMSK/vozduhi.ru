@@ -28,7 +28,7 @@ use yii\helpers\Html;
     'itemOptions' => [
         'class' => 'brand-card',
     ],
-    'beforeItem' => function ($model, $key, $index, $widget) use ($curLetter) {
+    'beforeItem' => function ($model, $key, $index, $widget) use (&$curLetter) {
         if ($curLetter !== $model->name[0]) {
             $curLetter = $model->name[0];
             return "</div><h3 id='{$curLetter}'>{$curLetter}</></h3><div>";

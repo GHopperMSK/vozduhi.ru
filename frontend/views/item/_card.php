@@ -38,7 +38,11 @@ $images = $item->images;
         <div class="card_img_wrapper_switch">
         <?php for ($i = 0; $i < 2; $i++) : ?>
             <?= Html::img($images[$i]->getUrl(
-                ['width' => ItemImage::IMAGE_WITDH, 'height' => ItemImage::IMAGE_HEIGHT]),
+                    [
+                        'width' => ItemImage::IMAGE_WITDH,
+                        'height' => ItemImage::IMAGE_HEIGHT
+                    ]
+                ),
                 [
                     'alt' => $images[$i]->alt,
                 ])
