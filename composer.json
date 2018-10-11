@@ -23,7 +23,8 @@
         "ghopper/fileinput": "@dev",
         "kartik-v/yii2-slider": "*",
         "metalguardian/yii2-fotorama-widget": "^1.0",
-        "evert/sitemap-php": "^1.2"
+        "evert/sitemap-php": "^1.2",
+        "phpoffice/phpspreadsheet": "^1.4"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
