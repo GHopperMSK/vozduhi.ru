@@ -29,8 +29,8 @@ use yii\helpers\Html;
         'class' => 'brand-card',
     ],
     'beforeItem' => function ($model, $key, $index, $widget) use (&$curLetter) {
-        if ($curLetter !== $model->name[0]) {
-            $curLetter = $model->name[0];
+        if ($curLetter !== strtoupper($model->name[0])) {
+            $curLetter = strtoupper($model->name[0]);
             return "</div><h3 id='{$curLetter}'>{$curLetter}</></h3><div>";
         }
     },

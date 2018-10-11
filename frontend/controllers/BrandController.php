@@ -33,7 +33,7 @@ class BrandController extends BaseController
     public function actionIndex()
     {
         $alphabet = (new \yii\db\Query())
-            ->select(['substring(name, 0, 2) as word'])
+            ->select(['UPPER(substring(name, 0, 2)) as word'])
             ->distinct()
             ->from('{{%brands}}')
             ->orderBy('word')
