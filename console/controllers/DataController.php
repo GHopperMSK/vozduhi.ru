@@ -58,24 +58,27 @@ class DataController extends Controller
 
         /** Create a new Reader  **/
         $reader = new \PhpOffice\PhpSpreadsheet\Reader\Ods();
-        $reader->setLoadSheetsOnly('Export Products Sheet');
+        $reader->setLoadSheetsOnly('Сводный прайс');
 
-        $root = new Category();
-        $root->name = 'root';
-        $root->makeRoot();
-        $slug = $root->getSlug();
-        $slug->slug = 'root';
-        $slug->save();
+        $root = Category::find()->where(['name' => 'root'])->one();
+        if (!$root) {
+            $root = new Category();
+            $root->name = 'root';
+            $root->makeRoot();
+            $slug = $root->getSlug();
+            $slug->slug = 'root';
+            $slug->save();
+        }
 
-        $tmpCat = new Category();
-        $tmpCat->name = 'временная';
-        $tmpCat->appendTo($root);
-        $slug = $tmpCat->getSlug();
-        $slug->slug = '1234567';
-        $slug->save();
+//        $tmpCat = new Category();
+//        $tmpCat->name = 'временная';
+//        $tmpCat->appendTo($root);
+//        $slug = $tmpCat->getSlug();
+//        $slug->slug = '1234567';
+//        $slug->save();
 
 
-        for ($startRow = 2; $startRow <= 5723; $startRow += $chunkSize) {
+        for ($startRow = 3; $startRow <= 5723; $startRow += $chunkSize) {
             // Create a new Instance of our Read Filter, passing in the limits on which rows we want to read
             $chunkFilter = new ChunkReadFilter($startRow, $chunkSize);
             // Tell the Reader that we want to use the new Read Filter that we've just Instantiated
@@ -88,42 +91,58 @@ class DataController extends Controller
             $sheetData = $spreadsheet->getActiveSheet()
                 ->toArray(null, true, true, true);
             foreach($sheetData as $row) {
-                if (!$row['Y']) {
+                if (empty($row['G'])) {
                     continue;
                 }
 
-                $row['A'] = trim($row['A']);
-                $row['B'] = trim($row['B']);
-                $row['Y'] = trim($row['Y']);
-
-                $brand = Brand::find()->where(['name' => $row['Y']])->one();
+                $brand = Brand::find()->where(['name' => $row['O']])->one();
                 if (!$brand) {
-                    $this->stdout("Adding brand '{$row['Y']}'" . PHP_EOL);
+                    $this->stdout("Adding brand '{$row['O']}'" . PHP_EOL);
                     $brand = new Brand();
-                    $brand->name = trim($row['Y']);
+                    $brand->name = trim($row['O']);
                     $brand->save();
                     $slug = $brand->getSlug();
                     $slug->slug = $this->transliterate($brand->name);
                     $slug->save();
                 }
 
-                $this->stdout("Adding item '{$row['B']}'" . PHP_EOL);
-                if (!$row['A']) {
-                    $row['A'] = rand(10000, 99999);
+                $topCategory = null;
+                $categories = explode('_', trim($row['M']));
+                foreach ($categories as $category) {
+                    $cat = Category::find()->where(['name' => $category])->one();
+                    if (!$cat) {
+                        $this->stdout("Adding category '{$category}'" . PHP_EOL);
+                        $cat = new Category();
+                        $cat->name = $category;
+                        if (!$topCategory) {
+                            $cat->appendTo($root);
+                        } else {
+                            $cat->appendTo($topCategory);
+                        }
+                        $slug = $cat->getSlug();
+                        $slug->slug = $this->transliterate($category);
+                        $slug->save();
+                    }
+                    $topCategory = $cat;
                 }
 
-                $item = Item::find()->where(['article' => $row['A']])->one();
+                $row['G'] = trim($row['G']);
+                $row['H'] = trim($row['H']);
+                $row['J'] = trim($row['J']);
+                $this->stdout("Adding item '{$row['G']}'" . PHP_EOL);
+
+                $item = Item::find()->where(['article' => $row['G']])->one();
                 if ($item) {
-                    continue;
+                    $row['G'] .= rand(10, 99);
                 }
 
                 $item = new Item();
-                $item->category_id = $tmpCat->id;
+                $item->category_id = $topCategory->id;
                 $item->brand_id = $brand->id;
-                $item->article = $row['A'];
-                $item->name = $row['B'];
-                $item->description = HtmlPurifier::process($row['D']);
-                $item->price = (int)$row['F'];
+                $item->article = $row['G'];
+                $item->name = $row['H'];
+                $item->description = HtmlPurifier::process($row['J']);
+                $item->price = (int)$row['K'];
                 $item->save();
                 $slug = $item->getSlug();
                 $slug->slug = $this->transliterate($item->name);
@@ -135,7 +154,8 @@ class DataController extends Controller
         return ExitCode::OK;
     }
 
-    private function transliterate($text) {
+    private function transliterate($text)
+    {
         $text = strtolower($text);
         $text = str_replace(' ', '_', $text);
         $text = trim($text, '_');
@@ -143,5 +163,4 @@ class DataController extends Controller
         return iconv('UTF-8', 'ASCII//TRANSLIT', $text);
 
     }
-
 }
